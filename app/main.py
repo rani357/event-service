@@ -1,4 +1,5 @@
 from fastapi import FastAPI, HTTPException
+import os
 from pydantic import BaseModel
 from pymongo import MongoClient
 
@@ -10,8 +11,9 @@ app = FastAPI(
 )
 
 
-client = MongoClient("mongodb://localhost:27017")
-
+client = MongoClient(
+    os.getenv("MONGO_URL", "mongodb://localhost:27017")
+)
 db = client["event_db"]
 events_collection = db["events"]
 
